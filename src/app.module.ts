@@ -1,10 +1,30 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { Module, OnModuleInit } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { InjectConnection } from '@nestjs/sequelize';
+import { Sequelize } from 'sequelize-typescript';
+import { DatabaseModule } from './database/database.module';
+import { TableModule } from './table/table.module';
+import { RestaurantModule } from './restaurant/restaurant.module';
+import { BookingModule } from './booking/booking.module';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    DatabaseModule,
+    TableModule,
+    RestaurantModule,
+    BookingModule,
+  ],
 })
-export class AppModule {}
+export class AppModule implements OnModuleInit {
+  constructor(@InjectConnection() private readonly sequelize: Sequelize) {}
+
+  async onModuleInit() {
+    try {
+      await this.sequelize.authenticate();
+      console.log('✅ Database connected successfully!');
+    } catch (error) {
+      console.error('❌ Failed to connect to the database:', error);
+    }
+  }
+}
