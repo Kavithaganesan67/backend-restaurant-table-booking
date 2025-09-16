@@ -6,6 +6,7 @@ import { DatabaseModule } from './database/database.module';
 import { TableModule } from './table/table.module';
 import { RestaurantModule } from './restaurant/restaurant.module';
 import { BookingModule } from './booking/booking.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { BookingModule } from './booking/booking.module';
     TableModule,
     RestaurantModule,
     BookingModule,
+    AuthModule,
   ],
 })
 export class AppModule implements OnModuleInit {

@@ -19,3 +19,11 @@ export class CreateTableDto {
   })
   description: string;
 }
+
+export class UserDto {
+  @ApiProperty({ example: 'email', description: 'email of the user' })
+  email: string;
+
+  @ApiProperty({ example: 'password', description: 'Password of the user' })
+  password: string;
+}

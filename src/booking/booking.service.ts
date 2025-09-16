@@ -19,4 +19,19 @@ export class BookingService {
       throw error;
     }
   }
+
+  async getBookingByid(id: number) {
+    try {
+      const response = await this.readOnlySequelize.query(
+        `SELECT * FROM bookings WHERE id=${id};`,
+      );
+      return {
+        Result: response,
+        status: HttpStatus.OK,
+      };
+    } catch (error) {
+      this.logger.log('Database Error', error);
+      throw error;
+    }
+  }
 }

@@ -1,5 +1,6 @@
 import { HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { Sequelize } from 'sequelize-typescript';
+import { getallRestaurants } from './restaurant.query';
 
 @Injectable()
 export class RestaurantService {
@@ -8,9 +9,8 @@ export class RestaurantService {
 
   async getAllRestaurant() {
     try {
-      const response = await this.readOnlySequelize.query(
-        `SELECT * FROM restaurants;`,
-      );
+      const query = getallRestaurants();
+      const response = await this.readOnlySequelize.query(query);
       return {
         Result: response,
         status: HttpStatus.OK,
